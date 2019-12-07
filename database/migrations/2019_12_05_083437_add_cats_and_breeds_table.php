@@ -13,6 +13,7 @@ class AddCatsAndBreedsTable extends Migration
     {
         Schema::create('cats', function ($table) {
             $table->increments('id');
+            $table->integer('user_id')->nullable()->references('id')->on('users');
             $table->string('name', 100);
             $table->date('date_of_birth');
             $table->integer('breed_id')->nullable();

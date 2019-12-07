@@ -13,11 +13,33 @@
 <body>
 <div class="container">
     <div class="page-header">
+        <div class="text-right">
+            @if(Auth::check())
+                Logged in as
+                <strong>{{{Auth::user()->name}}}</strong>
+                <a href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            @else
+                {{link_to('login', 'Log In')}}
+            @endif
+        </div>
         @yield('header')
     </div>
     @if(Session::has('message'))
         <div class="alert alert-success">
             {{Session::get('message')}}
+        </div>
+    @endif
+    @if(Session::has('error'))
+        <div class="alert alert-warning">
+            {{Session::get('error')}}
         </div>
     @endif
     @yield('content')

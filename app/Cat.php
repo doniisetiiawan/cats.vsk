@@ -12,4 +12,9 @@ class Cat extends Model
     {
         return $this->belongsTo(Breed::class);
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
