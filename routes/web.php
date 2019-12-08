@@ -65,9 +65,9 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::post('cats', function () {
-        $cat = \App\Cat::create(InputAlias::all());
+        $cat          = \App\Cat::create(InputAlias::all());
         $cat->user_id = Auth::user()->id;
-        if($cat->save()){
+        if ($cat->save()) {
             return Redirect::to('cats/' . $cat->id)
                 ->with('message', 'Successfully created profile!');
         } else {
@@ -77,7 +77,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::put('cats/{cat}', function (\App\Cat $cat) {
-        if(Auth::user()->canEdit($cat)){
+        if (Auth::user()->canEdit($cat)) {
             $cat->update(InputAlias::all());
             return Redirect::to('cats/' . $cat->id)
                 ->with('message', 'Successfully updated profile!');
@@ -97,3 +97,7 @@ Route::middleware('auth')->group(function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('json-test', function () {
+    return \App\Cat::paginate(2);
+});

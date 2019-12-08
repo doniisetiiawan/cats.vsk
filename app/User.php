@@ -55,7 +55,7 @@ class User extends Authenticatable
     protected static function boot()
     {
         parent::boot();
-        
+
         User::deleting(function ($user) {
             if ($user->cats->count()) {
                 return false;
