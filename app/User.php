@@ -51,4 +51,15 @@ class User extends Authenticatable
     {
         return $this->is_admin or $this->owns($cat);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        
+        User::deleting(function ($user) {
+            if ($user->cats->count()) {
+                return false;
+            }
+        });
+    }
 }
